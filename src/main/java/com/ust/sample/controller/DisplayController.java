@@ -4,7 +4,7 @@
  */
 
 
-package com.walmart.sample.content;
+package com.ust.sample.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.walmart.sample.model.Message;
-import com.walmart.sample.model.Person;
+import com.ust.sample.model.Message;
+import com.ust.sample.model.Person;
 
 /**
  * DisplayContoller Class contain post method and post method is used for returning Message class object
@@ -40,8 +40,8 @@ private static Logger logger = LoggerFactory.getLogger(DisplayController.class);
 
 		Message responseMessage = new Message();
 		
-		responseMessage.setMessage("Hey "+person.getName());
-		
+		responseMessage.setWelcomeMessage("Hey "+person.getPersonName());
+	
 		logger.debug("Ending Post operation");
 		
 		return responseMessage ;

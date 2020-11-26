@@ -4,7 +4,7 @@
  */
 
 
-package com.walmart.sample;
+package com.ust.sample;
 
 import org.slf4j.Logger;
 import org.springframework.boot.SpringApplication;
