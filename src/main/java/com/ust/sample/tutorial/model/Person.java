@@ -4,7 +4,7 @@
  */
 
 
-package com.ust.sample.model;
+package com.ust.sample.tutorial.model;
 
 /**
  * Model class for person contains one variable name and getters and setters

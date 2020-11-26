@@ -4,7 +4,7 @@
  */
 
 
-package com.ust.sample;
+package com.ust.sample.tutorial;
 
 import org.slf4j.Logger;
 import org.springframework.boot.SpringApplication;
