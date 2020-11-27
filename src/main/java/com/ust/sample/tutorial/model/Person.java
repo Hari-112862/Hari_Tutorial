@@ -6,6 +6,8 @@
 
 package com.ust.sample.tutorial.model;
 
+import lombok.Data;
+
 /**
  * Model class for person contains one variable name and getters and setters
  * 
@@ -13,17 +15,11 @@ package com.ust.sample.tutorial.model;
  *
  */
 
-
+@Data
 public class Person {
 
 	private String personName = null;
 
-	public String getPersonName() {
-		return personName;
-	}
 
-	public void setPersonName(String personName) {
-		this.personName = personName;
-	}
 
 }

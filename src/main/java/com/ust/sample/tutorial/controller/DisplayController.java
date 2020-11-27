@@ -7,7 +7,12 @@
 package com.ust.sample.tutorial.controller;
 
 import org.slf4j.Logger;
+
 import org.slf4j.LoggerFactory;
+
+
+import javax.ws.rs.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +20,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ust.sample.tutorial.controller.annotation.SwaggerToken;
 import com.ust.sample.tutorial.model.Message;
 import com.ust.sample.tutorial.model.Person;
+
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * DisplayContoller Class contain post method and post method is used for returning Message class object
@@ -24,9 +33,12 @@ import com.ust.sample.tutorial.model.Person;
  *
  */
 @RestController
+
+@Slf4j
+
 public class DisplayController {
 
-private static Logger logger = LoggerFactory.getLogger(DisplayController.class);
+
 	
 
 /**
@@ -34,17 +46,22 @@ private static Logger logger = LoggerFactory.getLogger(DisplayController.class);
  */
 
 	@PostMapping("/hello")
-	public Message newMessage(@RequestBody Person person){
+	
+	@SwaggerToken
+	
+	@ApiOperation(value = "Showing message", notes = "Returns 200 OK/204 NO_CONTENT",httpMethod = HttpMethod.POST)
 
-		logger.debug("Begining the Post operation");
+	public ResponseEntity<Message> newMessage(@RequestBody Person person){
+
+		log.info("Begining the Post operation");
 
 		Message responseMessage = new Message();
 		
 		responseMessage.setWelcomeMessage("Hey "+person.getPersonName());
 	
-		logger.debug("Ending Post operation");
-		
-		return responseMessage ;
+		log.info("Ending Post operation");
+			
+		return ResponseEntity.ok(responseMessage) ;
 		
 		
 	}
