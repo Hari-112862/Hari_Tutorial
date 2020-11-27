@@ -25,7 +25,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * 
- * Execution Starts  here in the main method 
+ * class contain main metthod
  * @author Hari
  *
  */
@@ -37,6 +37,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Slf4j
 public class DisplayApplication {
 
+	
+	/**
+	 * Execution starts here
+	 * @param args
+	 */
 	public static void main(String[] args) {
 	
 		try {
