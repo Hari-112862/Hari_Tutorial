@@ -5,7 +5,7 @@
  * 
  */
  
-package com.training.StudentDemo.annotation;
+package com.training.student.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

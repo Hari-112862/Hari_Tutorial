@@ -1,23 +1,12 @@
-
-/**
+/***
  * Project Name  : StudentProject
-
- * 
  */
-
-
-package com.training.StudentDemo.Repository;
-
-
+package com.training.student.repository;
 
 import org.springframework.stereotype.Repository;
-
-
-import com.microsoft.azure.spring.data.cosmosdb.repository.CosmosRepository;
 import com.microsoft.azure.spring.data.cosmosdb.repository.ReactiveCosmosRepository;
-import com.training.StudentDemo.Model.Student;
+import com.training.student.model.Student;
 
-import reactor.core.publisher.Flux;
 
 /***
  * Interface for student repository
@@ -27,6 +16,6 @@ import reactor.core.publisher.Flux;
 @Repository
 public interface StudentRepository extends ReactiveCosmosRepository<Student, String> {
  
-	Flux<Student> findByFirstName(String firstName);
+
 
 }

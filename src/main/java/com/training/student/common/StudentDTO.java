@@ -1,37 +1,24 @@
-
-/**
+/***
  * Project Name  : StudentProject
-
- * 
  */
 
-
-package com.training.StudentDemo.common;
-
-import org.springframework.data.annotation.Id;
-
-
-import com.microsoft.azure.spring.data.cosmosdb.core.mapping.PartitionKey;
-import com.training.StudentDemo.Model.Student;
+package com.training.student.common;
 
 import lombok.Data;
 
 /***
- * Temporary class for pojo 
+ * Temporary class for Student 
  * @author SACHIN AJITHKUMAR
  *
  */
 
 @Data
-public class StudentDto {
-	
-	  @Id
+public class StudentDTO {
+
 	    private String studentId;
 	    private String firstName;
 	    private String studentDepartment;
 	    private int rollNumber;
-	 
-	    @PartitionKey
 	    private String lastName;
 	    private String studentAddress;
 	  
