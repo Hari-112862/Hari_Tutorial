@@ -43,7 +43,7 @@ public class StudentService {
 	public Student updateAndSaveStudent(StudentDTO studentDto) {
 
 		Student savedUser = null;
-		log.info("Starting saveStudent method");
+		log.debug("Starting saveStudent method");
 
 		try {
 
@@ -90,7 +90,7 @@ public class StudentService {
 				savedUser = saveUserMono.block();
 
 			}
-			log.info("Ending saveStudent method");
+			log.debug("Ending saveStudent method");
 
 			return savedUser;
 		} catch (Exception exception) {
@@ -112,7 +112,7 @@ public class StudentService {
 
 		StudentDTO studentDto = new StudentDTO();
 
-		log.info("Starting getstudent method");
+		log.debug("Starting getstudent method");
 
 		try {
 
@@ -121,12 +121,12 @@ public class StudentService {
 			Student studentInfo = fetchStudentById.block();
 
 			if (studentInfo == null) {
-				log.info("Ending getstudent method");
+				log.debug("Ending getstudent method");
 
 				return null;
 			}
 
-			log.info("Ending getstudent method");
+			log.debug("Ending getstudent method");
 
 			BeanUtils.copyProperties(studentInfo, studentDto);
 
@@ -150,7 +150,7 @@ public class StudentService {
 
 	public String deleteStudent(String id) {
 
-		log.info("Starting deletestudent method");
+		log.debug("Starting deletestudent method");
 		try {
 
 			Mono<Student> findByIdMono = repository.findById(id);
@@ -159,7 +159,7 @@ public class StudentService {
 
 			repository.delete(findByIdUser).block();
 
-			log.info("ending deletestudent method");
+			log.debug("ending deletestudent method");
 
 			return "Deleted";
 

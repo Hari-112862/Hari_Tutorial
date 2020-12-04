@@ -50,24 +50,24 @@ public class StudentController {
 
 	public ResponseEntity<Student> addUser(@RequestBody StudentDTO studentDto) {
 
-		log.info("Begining the Post operation");
+		log.debug("Begining the Post operation");
 
 		Student student = studentService.updateAndSaveStudent(studentDto);
 
 		if (student != null) {
 
-			log.info("Status:201  Response:", studentDto);
+			log.debug("Status:201  Response:", studentDto);
 
-			log.info("Ending the Post operation");
+			log.debug("Ending the Post operation");
 
 			return ResponseEntity.ok(student);
 		}
 
 		else {
 
-			log.info("Status:204  Response:", studentDto);
+			log.debug("Status:204  Response:", studentDto);
 
-			log.info("Ending the Post operation because of no value");
+			log.debug("Ending the Post operation because of no value");
 
 			return ResponseEntity.noContent().build();
 
@@ -88,9 +88,9 @@ public class StudentController {
 
 	public String deleteUser(@PathVariable String id) {
 
-		log.info("Begining the Delete operation");
+		log.debug("Begining the Delete operation");
 
-		log.info("Ending the Delete operation");
+		log.debug("Ending the Delete operation");
 
 		return studentService.deleteStudent(id);
 	}
@@ -109,21 +109,21 @@ public class StudentController {
 
 	public ResponseEntity<StudentDTO> getStudent(@PathVariable String id) {
 
-		log.info("Begining the Get operation");
+		log.debug("Begining the Get operation");
 
 		StudentDTO studentDto = studentService.getStudent(id);
 
 		if (studentDto != null) {
 
-			log.info("Status:201  Response:", studentDto);
+			log.debug("Status:201  Response:", studentDto);
 
 			return ResponseEntity.ok(studentDto);
 
 		} else {
 
-			log.info("Ending the Get operation");
+			log.debug("Ending the Get operation");
 			
-			log.info("Status:204  Response:", studentDto);
+			log.debug("Status:204  Response:", studentDto);
 
 			return ResponseEntity.noContent().build();
 		}
