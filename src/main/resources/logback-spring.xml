@@ -2,17 +2,17 @@
 <configuration>
 	<appender name="SAVE-TO-FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<File>${spring.display.log.dir}/displayTrackerService.log
+		<File>${spring.student.log.dir}/studentTrackerService.log
 		</File>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-			<FileNamePattern>${spring.display.log.dir}/displayTrackerService%d{yyyy-MM-dd}_%i.log
+			<FileNamePattern>${spring.student.log.dir}/studentTrackerService%d{yyyy-MM-dd}_%i.log
 			</FileNamePattern>
 			<maxIndex>5</maxIndex>
 		</rollingPolicy>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<FileNamePattern>${spring.display.log.dir}/displayTrackerService%d{yyyy-MM-dd}_%i.log
+			<FileNamePattern>${spring.student.log.dir}/studentTrackerService%d{yyyy-MM-dd}_%i.log
 			</FileNamePattern>
 			<maxFileSize>10MB</maxFileSize>
 			<totalSizeCap>50MB</totalSizeCap>
