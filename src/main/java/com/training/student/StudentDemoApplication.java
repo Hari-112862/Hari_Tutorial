@@ -22,50 +22,36 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  *
  */
 @SpringBootApplication
-
 @EnableSwagger2
-
 @Slf4j
 public class StudentDemoApplication {
 
-	/**
-	 * Execution starts here
-	 * 
-	 * @param args
-	 */
+  /**
+   * Execution starts here
+   * 
+   * @param args
+   */
 
-	public static void main(String[] args) {
+  public static void main(String[] args) {
 
-		try {
+    try {
+      log.debug("main method starts");
+      SpringApplication.run(StudentDemoApplication.class, args);
+    } catch (Exception e) {
+      log.error("Exception:", e);
+    }
+  }
 
-			log.debug("main method starts");
-			SpringApplication.run(StudentDemoApplication.class, args);
-
-		}
-
-		catch (Exception e) {
-
-			log.error("Exception:", e);
-		}
-	}
-
-	/**
-	 * Docker Api method pointing to base package
-	 * 
-	 * @return
-	 */
-	@Bean
-	public Docket api() {
-
-		return new Docket(DocumentationType.SWAGGER_2)
-
-				.select()
-
-				.apis(RequestHandlerSelectors.basePackage("com.training.StudentDemo.controller"))
-
-				.paths(PathSelectors.any())
-
-				.build();
-	}
+  /**
+   * Docker Api method pointing to base package
+   * 
+   * @return
+   */
+  @Bean
+  public Docket api() {
+    return new Docket(DocumentationType.SWAGGER_2).select()
+        .apis(RequestHandlerSelectors.basePackage("com.training.StudentDemo.controller"))
+        .paths(PathSelectors.any()).build();
+  }
 
 }

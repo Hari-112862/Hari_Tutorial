@@ -1,5 +1,5 @@
 /***
- * Project Name  : StudentProject
+ * Project Name : StudentProject
  */
 
 package com.training.student.controller;
@@ -33,100 +33,81 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StudentController {
 
-	@Autowired
-	StudentService studentService;
+  @Autowired
+  StudentService studentService;
 
-	/***
-	 * post method which is addingStudent
-	 * 
-	 * @param studentDto
-	 * @return ResponseEntity of Student
-	 */
-	@PostMapping("/student")
+  /***
+   * post method which is addingStudent
+   * 
+   * @param studentDto
+   * @return ResponseEntity of Student
+   */
+  @PostMapping("/student")
+  @SwaggerToken
+  @ApiOperation(value = "Save and Update a Student ", notes = "Returns 200 OK/204 NO_CONTENT",
+      httpMethod = HttpMethod.POST)
 
-	@SwaggerToken
+  public ResponseEntity<Student> addUser(@RequestBody StudentDTO studentDto) {
 
-	@ApiOperation(value = "Save and Update a Student ", notes = "Returns 200 OK/204 NO_CONTENT", httpMethod = HttpMethod.POST)
+    log.debug("Begining the Post operation");
+    Student student = studentService.updateAndSaveStudent(studentDto);
+    if (student != null) {
+      log.debug("Status:201  Response:", studentDto);
+      log.debug("Ending the Post operation");
+      return ResponseEntity.ok(student);
+    } else {
+      log.debug("Status:204  Response:", studentDto);
+      log.debug("Ending the Post operation because of no value");
+      return ResponseEntity.noContent().build();
 
-	public ResponseEntity<Student> addUser(@RequestBody StudentDTO studentDto) {
+    }
 
-		log.debug("Begining the Post operation");
+  }
 
-		Student student = studentService.updateAndSaveStudent(studentDto);
+  /***
+   * Delete method which is deleting existing student
+   * 
+   * @param id
+   * @return String
+   */
 
-		if (student != null) {
+  @DeleteMapping("/student/{id}")
+  @SwaggerToken
+  @ApiOperation(value = "Delete an existing Student", notes = "Returns 200 OK/204 NO_CONTENT",
+      httpMethod = HttpMethod.DELETE)
 
-			log.debug("Status:201  Response:", studentDto);
+  public String deleteUser(@PathVariable String id) {
 
-			log.debug("Ending the Post operation");
+    log.debug("Begining the Delete operation");
+    log.debug("Ending the Delete operation");
+    return studentService.deleteStudent(id);
+  }
 
-			return ResponseEntity.ok(student);
-		}
+  /***
+   * This method getting already present student by id
+   * 
+   * @param id
+   * @return ResposeEntity of Student Dto
+   */
 
-		else {
+  @GetMapping("/student/{id}")
 
-			log.debug("Status:204  Response:", studentDto);
+  @SwaggerToken
+  @ApiOperation(value = "Fetching a Student ", notes = "Returns 200 OK/204 NO_CONTENT",
+      httpMethod = HttpMethod.GET)
 
-			log.debug("Ending the Post operation because of no value");
+  public ResponseEntity<StudentDTO> getStudent(@PathVariable String id) {
 
-			return ResponseEntity.noContent().build();
-
-		}
-
-	}
-
-	/***
-	 * Delete method which is deleting existing student
-	 * 
-	 * @param id
-	 * @return String
-	 */
-
-	@DeleteMapping("/student/{id}")
-	@SwaggerToken
-	@ApiOperation(value = "Delete an existing Student", notes = "Returns 200 OK/204 NO_CONTENT", httpMethod = HttpMethod.DELETE)
-
-	public String deleteUser(@PathVariable String id) {
-
-		log.debug("Begining the Delete operation");
-
-		log.debug("Ending the Delete operation");
-
-		return studentService.deleteStudent(id);
-	}
-
-	/***
-	 * This method getting already present student by id
-	 * 
-	 * @param id
-	 * @return ResposeEntity of Student Dto
-	 */
-
-	@GetMapping("/student/{id}")
-
-	@SwaggerToken
-	@ApiOperation(value = "Fetching a Student ", notes = "Returns 200 OK/204 NO_CONTENT", httpMethod = HttpMethod.GET)
-
-	public ResponseEntity<StudentDTO> getStudent(@PathVariable String id) {
-
-		log.debug("Begining the Get operation");
-
-		StudentDTO studentDto = studentService.getStudent(id);
-
-		if (studentDto != null) {
-
-			log.debug("Status:201  Response:", studentDto);
-
-			return ResponseEntity.ok(studentDto);
-
-		} else {
-
-			log.debug("Ending the Get operation");
-			
-			log.debug("Status:204  Response:", studentDto);
-
-			return ResponseEntity.noContent().build();
-		}
-	}
+    log.debug("Begining the Get operation");
+    StudentDTO studentDto = studentService.getStudent(id);
+    if (studentDto != null) {
+      log.debug("Status:201  Response:", studentDto);
+      return ResponseEntity.ok(studentDto);
+    } else {
+      log.debug("Ending the Get operation");
+      log.debug("Status:204  Response:", studentDto);
+      return ResponseEntity.noContent().build();
+    }
+  }
 
 }
