@@ -7,6 +7,7 @@ package com.training.student;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import com.training.student.constant.StudentConstants;
 import lombok.extern.slf4j.Slf4j;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -50,7 +51,7 @@ public class StudentDemoApplication {
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2).select()
-        .apis(RequestHandlerSelectors.basePackage("com.training.StudentDemo.controller"))
+        .apis(RequestHandlerSelectors.basePackage(StudentConstants.STUDENT_BASE_PACKAGE))
         .paths(PathSelectors.any()).build();
   }
 
