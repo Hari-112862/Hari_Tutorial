@@ -40,7 +40,7 @@
 		<appender-ref ref="SAVE-TO-FILE" />
 	</logger>
 	<springProfile name="local">
-		<logger name="com.training.StudentDemo" level="INFO"
+		<logger name="com.training.student" level="INFO"
 			additivity="false">
 			<appender-ref ref="SAVE-TO-FILE" />
 			<appender-ref ref="console" />

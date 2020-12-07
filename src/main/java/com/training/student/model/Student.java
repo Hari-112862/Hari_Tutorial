@@ -4,7 +4,6 @@
 package com.training.student.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.stereotype.Service;
 import com.microsoft.azure.spring.data.cosmosdb.core.mapping.Document;
 import com.microsoft.azure.spring.data.cosmosdb.core.mapping.PartitionKey;
 import lombok.Data;

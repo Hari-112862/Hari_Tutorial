@@ -42,7 +42,7 @@ public class StudentController {
    * @param studentDto
    * @return ResponseEntity of Student
    */
-  @PostMapping("/student")
+  @PostMapping("")
   @SwaggerToken
   @ApiOperation(value = "Save and Update a Student ", notes = "Returns 200 OK/204 NO_CONTENT",
       httpMethod = HttpMethod.POST)
@@ -51,12 +51,12 @@ public class StudentController {
 
     log.debug("Begining the Post operation");
     Student student = studentService.updateAndSaveStudent(studentDto);
-    if (student != null) {
-      log.debug("Status:201  Response:", studentDto);
+    if (null != student) {
+      log.info("Status:201  Response:", studentDto);
       log.debug("Ending the Post operation");
       return ResponseEntity.ok(student);
     } else {
-      log.debug("Status:204  Response:", studentDto);
+      log.info("Status:204  Response:", studentDto);
       log.debug("Ending the Post operation because of no value");
       return ResponseEntity.noContent().build();
 
@@ -71,16 +71,18 @@ public class StudentController {
    * @return String
    */
 
-  @DeleteMapping("/student/{id}")
+  @DeleteMapping("/{id}")
   @SwaggerToken
   @ApiOperation(value = "Delete an existing Student", notes = "Returns 200 OK/204 NO_CONTENT",
       httpMethod = HttpMethod.DELETE)
 
-  public String deleteUser(@PathVariable String id) {
+  public ResponseEntity<String> deleteUser(@PathVariable String id) {
 
+    String statusMessage=null;
     log.debug("Begining the Delete operation");
     log.debug("Ending the Delete operation");
-    return studentService.deleteStudent(id);
+    statusMessage = studentService.deleteStudent(id);
+    return ResponseEntity.ok(statusMessage);
   }
 
   /***
@@ -90,8 +92,7 @@ public class StudentController {
    * @return ResposeEntity of Student Dto
    */
 
-  @GetMapping("/student/{id}")
-
+  @GetMapping("/{id}")
   @SwaggerToken
   @ApiOperation(value = "Fetching a Student ", notes = "Returns 200 OK/204 NO_CONTENT",
       httpMethod = HttpMethod.GET)
@@ -100,12 +101,12 @@ public class StudentController {
 
     log.debug("Begining the Get operation");
     StudentDTO studentDto = studentService.getStudent(id);
-    if (studentDto != null) {
-      log.debug("Status:201  Response:", studentDto);
+    if (null != studentDto) {
+      log.info("Status:201  Response:", studentDto);
       return ResponseEntity.ok(studentDto);
     } else {
       log.debug("Ending the Get operation");
-      log.debug("Status:204  Response:", studentDto);
+      log.info("Status:204  Response:", studentDto);
       return ResponseEntity.noContent().build();
     }
   }

@@ -8,18 +8,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
 import com.training.student.common.StudentDTO;
 import com.training.student.exception.StudentServiceLayerException;
 import com.training.student.model.Student;
 import com.training.student.repository.StudentRepository;
-
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
-@Service
-
-@Slf4j
 
 /**
  * This class is used for doing operations like save delete and get by id all ara=e calling from
@@ -28,6 +23,9 @@ import reactor.core.publisher.Mono;
  * @author SACHIN AJITHKUMAR
  *
  */
+
+@Service
+@Slf4j
 @Component
 public class StudentService {
 
@@ -47,26 +45,16 @@ public class StudentService {
 
     try {
       Student student = new Student();
-      Mono<Student> fetchStudentFromDb = repository.findById(studentDto.getStudentId());
-      Student studenInDb = fetchStudentFromDb.block();
-      if (studenInDb != null) {
+      Student studenInDb = repository.findById(studentDto.getStudentId()).block();
+      if (null !=studenInDb) {
         repository.delete(studenInDb).block();
-        student.setStudentId(studentDto.getStudentId());
-        student.setFirstName(studentDto.getFirstName());
-        student.setLastName(studentDto.getLastName());
-        student.setStudentAddress(studentDto.getStudentAddress());
-        student.setRollNumber(studentDto.getRollNumber());
-        Mono<Student> saveUserMono = repository.save(student);
-        savedUser = saveUserMono.block();
-      } else {
-        student.setStudentId(studentDto.getStudentId());
-        student.setFirstName(studentDto.getFirstName());
-        student.setLastName(studentDto.getLastName());
-        student.setStudentAddress(studentDto.getStudentAddress());
-        student.setRollNumber(studentDto.getRollNumber());
-        Mono<Student> saveUserMono = repository.save(student);
-        savedUser = saveUserMono.block();
       }
+        student.setStudentId(studentDto.getStudentId());
+        student.setFirstName(studentDto.getFirstName());
+        student.setLastName(studentDto.getLastName());
+        student.setStudentAddress(studentDto.getStudentAddress());
+        student.setRollNumber(studentDto.getRollNumber());
+        savedUser = repository.save(student).block();
       log.debug("Ending saveStudent method");
       return savedUser;
     } catch (Exception exception) {
@@ -88,9 +76,8 @@ public class StudentService {
     StudentDTO studentDto = new StudentDTO();
     log.debug("Starting getstudent method");
     try {
-      Mono<Student> fetchStudentById = repository.findById(id);
-      Student studentInfo = fetchStudentById.block();
-      if (studentInfo == null) {
+      Student studentInfo = repository.findById(id).block();
+      if (null==studentInfo) {
         log.debug("Ending getstudent method");
         return null;
       }
@@ -116,11 +103,13 @@ public class StudentService {
 
     log.debug("Starting deletestudent method");
     try {
-      Mono<Student> findByIdMono = repository.findById(id);
-      Student findByIdUser = findByIdMono.block();
-      repository.delete(findByIdUser).block();
+      Student findByIdStudent = repository.findById(id).block();
+      if(null != findByIdStudent) {
+      repository.delete(findByIdStudent).block();
       log.debug("ending deletestudent method");
       return "Deleted";
+      }
+      return "Not Deleted";
     } catch (Exception exception) {
       log.error("Exception :", exception);
       throw new StudentServiceLayerException("Exception in DeleteStudent", exception);
