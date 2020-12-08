@@ -13,7 +13,7 @@
 	<artifactId>tudent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Student</name>
-	<description>Hey its new</description>
+	<description>New Student Project</description>
 
 	<properties>
 		<java.version>1.8</java.version>
