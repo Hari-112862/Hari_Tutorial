@@ -51,7 +51,7 @@ public class StudentDemoApplication {
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2).select()
-        .apis(RequestHandlerSelectors.basePackage(StudentConstants.STUDENT_BASE_PACKAGE))
+        .apis(RequestHandlerSelectors.basePackage("com.training.student.controller"))
         .paths(PathSelectors.any()).build();
   }
 

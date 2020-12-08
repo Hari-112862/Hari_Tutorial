@@ -5,7 +5,7 @@
 package com.training.student.controller;
 
 import javax.ws.rs.HttpMethod;
-
+import javax.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author SACHIN AJITHKUMAR
  *
  */
+@Path("/student")
 @RestController
 @Slf4j
 public class StudentController {
@@ -42,10 +43,9 @@ public class StudentController {
    * @param studentDto
    * @return ResponseEntity of Student
    */
-  @PostMapping("")
+  @PostMapping("/")
   @SwaggerToken
-  @ApiOperation(value = "Save and Update a Student ", notes = "Returns 200 OK/204 NO_CONTENT",
-      httpMethod = HttpMethod.POST)
+  @ApiOperation(value = "Save and Update a Student ", notes = "Returns 200 OK/204 NO_CONTENT",httpMethod = HttpMethod.POST)
 
   public ResponseEntity<Student> addUser(@RequestBody StudentDTO studentDto) {
 
@@ -82,7 +82,13 @@ public class StudentController {
     log.debug("Begining the Delete operation");
     log.debug("Ending the Delete operation");
     statusMessage = studentService.deleteStudent(id);
-    return ResponseEntity.ok(statusMessage);
+    if(null!=statusMessage)
+    {
+      log.info("Status:201  Response:");
+      return ResponseEntity.ok(statusMessage);
+    }
+    log.info("Status:204  Response:");
+    return ResponseEntity.noContent().build();
   }
 
   /***

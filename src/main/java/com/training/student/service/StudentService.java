@@ -109,7 +109,7 @@ public class StudentService {
       log.debug("ending deletestudent method");
       return "Deleted";
       }
-      return "Not Deleted";
+      return null;
     } catch (Exception exception) {
       log.error("Exception :", exception);
       throw new StudentServiceLayerException("Exception in DeleteStudent", exception);
