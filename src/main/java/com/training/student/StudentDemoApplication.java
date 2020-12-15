@@ -7,7 +7,10 @@ package com.training.student;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import com.training.student.constant.StudentConstants;
 import lombok.extern.slf4j.Slf4j;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -51,8 +54,30 @@ public class StudentDemoApplication implements WebMvcConfigurer {
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2).select()
-        .apis(RequestHandlerSelectors.basePackage("com.training.student.controller"))
+        .apis(RequestHandlerSelectors.basePackage(StudentConstants.STUDENT_BASE_PACKAGE_CONTROLLER))
         .paths(PathSelectors.any()).build();
   }
+  /***
+   * Swagger url gerenation
+   */
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+      registry.addRedirectViewController("/documentation/v2/api-docs", "/v2/api-docs");
+      registry.addRedirectViewController("/documentation/configuration/ui", "/configuration/ui");
+      registry.addRedirectViewController("/documentation/configuration/security", "/configuration/security");
+      registry.addRedirectViewController("/documentation/swagger-resources", "/swagger-resources");
+      registry.addRedirectViewController("/documentation", "/documentation/swagger-ui.html");
+      registry.addRedirectViewController("/documentation/", "/documentation/swagger-ui.html");
+  }
+  /***
+   * Adding ResourceHandler
+   * 
+   */
+
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+      registry.addResourceHandler("/documentation/**").addResourceLocations("classpath:/META-INF/resources/");
+  }
+
 
 }

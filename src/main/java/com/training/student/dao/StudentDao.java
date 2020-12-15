@@ -17,6 +17,7 @@ import com.azure.cosmos.models.SqlParameter;
 import com.azure.cosmos.models.SqlQuerySpec;
 import com.azure.cosmos.util.CosmosPagedIterable;
 import com.training.student.constant.SQLQueries;
+import com.training.student.constant.StudentConstants;
 import com.training.student.mapper.StudentMapper;
 import com.training.student.model.Student;
 
@@ -34,9 +35,9 @@ public class StudentDao {
   private StudentMapper mapper;
   @Autowired
   private CosmosClientBuilder cosmosClientBuilder;
-  @Value("${azure.cosmosdb.database}")
+  @Value(StudentConstants.DATABASE_NAME)
   private String databaseName;
-  private String collectionName = "studentDb";
+  private String collectionName = StudentConstants.DATABASE_NAME;
 
   /***
    * This method accepts 2 parameters for the query query execution happeing here.
@@ -58,8 +59,8 @@ public class StudentDao {
     }
 
     querySpec.setQueryText(query);
-    SqlParameter department = new SqlParameter("@studentDepartment", studentDepartment);
-    SqlParameter rollNumberparam = new SqlParameter("@rollNumber", rollNumber);
+    SqlParameter department = new SqlParameter(StudentConstants.DATABASE_PARAM_STUDENT_DEPARTMENT, studentDepartment);
+    SqlParameter rollNumberparam = new SqlParameter(StudentConstants.DATABASE_PARAM_STUDENT_ROLLNUMBERT, rollNumber);
     List<SqlParameter> paramList = new ArrayList<>();
     paramList.add(department);
     paramList.add(rollNumberparam);
