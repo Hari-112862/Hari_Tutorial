@@ -7,7 +7,6 @@ package com.ust.training.student.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import com.azure.cosmos.CosmosClientBuilder;
 import com.azure.cosmos.DirectConnectionConfig;
 import com.azure.cosmos.GatewayConnectionConfig;
@@ -25,6 +24,14 @@ import com.ust.training.student.constant.StudentPackageConstants;
 @EnableReactiveCosmosRepositories(basePackages = StudentPackageConstants.STUDENT_BASE_PACKAGE)
 public class CosmosDBConfig extends AbstractCosmosConfiguration {
 
+  @Value(StudentDbConstants.DATABASE_URI)
+  private String cosmosDbUrl;
+
+  @Value(StudentDbConstants.DATABASE_KEY)
+  private String cosmosDbKey;
+
+  @Value(StudentDbConstants.DATABASE_NAME)
+  private String databaseName;
 	/***
 	 * Method for returning the dburl and key
 	 * @return CosmosClientBuilder
@@ -32,8 +39,8 @@ public class CosmosDBConfig extends AbstractCosmosConfiguration {
 	@Bean
 	public CosmosClientBuilder getCosmosClientBuilder() {
 		return new CosmosClientBuilder()
-				.endpoint(StudentDbConstants.DATABASE_URI)
-				.key(StudentDbConstants.DATABASE_KEY)
+				.endpoint(cosmosDbUrl)
+				.key(cosmosDbKey)
 				.directMode(new DirectConnectionConfig(),
 						new GatewayConnectionConfig());
 
@@ -44,6 +51,6 @@ public class CosmosDBConfig extends AbstractCosmosConfiguration {
  */
 	@Override
 	protected String getDatabaseName() {
-		return StudentDbConstants.DATABASE_NAME;
+		return databaseName;
 	}
 }

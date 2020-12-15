@@ -18,6 +18,6 @@ public class StudentDbConstants {
   public static final String COLLECTION_NAME                    ="studentDb";
   public static final String DATABASE_NAME                      ="${azure.cosmosdb.database}";
   public static final String DATABASE_KEY                       ="${azure.cosmosdb.key}";
-  public static final String DATABASE_URI                       = "${azure.cosmosdb.uri}";
+  public static final String DATABASE_URI                       ="${azure.cosmosdb.uri}";
 
 }

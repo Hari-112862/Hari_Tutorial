@@ -35,6 +35,10 @@ public class StudentDao {
   @Autowired
   private CosmosClientBuilder cosmosClientBuilder;
 
+  @Value(StudentDbConstants.DATABASE_NAME)
+  private String databaseName;
+
+
   /***
    * This method accepts 2 parameters for the query query execution happeing here.
    * 
@@ -57,15 +61,15 @@ public class StudentDao {
       String query = SQLQueries.BASE_QUERY;
       if (null != rollNumber) {
         query = query.concat(SQLQueries.ROLL_NUMBER_CRITERIA);
-        paramList.add(department);
+        paramList.add(rollNumberparam);
       }
       if (!StringUtils.isEmpty(studentDepartment)) {
         query = query.concat(SQLQueries.DEPARTMENT_CRITERIA);
-        paramList.add(rollNumberparam);
+        paramList.add(department);
       }
       querySpec.setQueryText(query);
       querySpec.setParameters(paramList);
-      studentList = cosmosClientBuilder.buildClient().getDatabase(StudentDbConstants.DATABASE_NAME)
+      studentList = cosmosClientBuilder.buildClient().getDatabase(databaseName)
           .getContainer(StudentDbConstants.COLLECTION_NAME).queryItems(querySpec, getQueryOptions(), Student.class)
           .stream().collect(Collectors.toList());
     } catch (Exception exception) {
