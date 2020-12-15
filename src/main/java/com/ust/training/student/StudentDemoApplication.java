@@ -2,7 +2,7 @@
  * Projectname:Student project
  */
 
-package com.training.student;
+package com.ust.training.student;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import com.training.student.constant.StudentConstants;
+import com.ust.training.student.constant.StudentPackageConstants;
 import lombok.extern.slf4j.Slf4j;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -41,8 +41,8 @@ public class StudentDemoApplication implements WebMvcConfigurer {
     try {
       log.debug("main method starts");
       SpringApplication.run(StudentDemoApplication.class, args);
-    } catch (Exception e) {
-      log.error("Exception:", e);
+    } catch (Exception exception) {
+      log.error("Exception in Main:", exception);
     }
   }
 
@@ -54,7 +54,7 @@ public class StudentDemoApplication implements WebMvcConfigurer {
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.SWAGGER_2).select()
-        .apis(RequestHandlerSelectors.basePackage(StudentConstants.STUDENT_BASE_PACKAGE_CONTROLLER))
+        .apis(RequestHandlerSelectors.basePackage(StudentPackageConstants.STUDENT_BASE_PACKAGE_CONTROLLER))
         .paths(PathSelectors.any()).build();
   }
   /***
@@ -73,7 +73,6 @@ public class StudentDemoApplication implements WebMvcConfigurer {
    * Adding ResourceHandler
    * 
    */
-
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
       registry.addResourceHandler("/documentation/**").addResourceLocations("classpath:/META-INF/resources/");

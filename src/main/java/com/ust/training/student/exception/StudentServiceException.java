@@ -2,23 +2,20 @@
  * Project Name  : StudentProject
  */
 
-package com.training.student.exception;
+package com.ust.training.student.exception;
 
 /**
  * Exception handling class for StudentService
  * @author SACHIN AJITHKUMAR
  *
  */
-
-public class StudentServiceLayerException extends RuntimeException {
-	
+public class StudentServiceException extends RuntimeException {
 	private static final long serialVersionUID = 2853146757927156650L;
 /**
  * 
  * one parameter constructor for exception
  */
-	
-	public StudentServiceLayerException(String message) {
+	public StudentServiceException(String message) {
 		super(message);
 	}
 	
@@ -26,11 +23,7 @@ public class StudentServiceLayerException extends RuntimeException {
 	 * 
 	 * Two parameter constructor for exception
 	 */
-	    
-
-	public StudentServiceLayerException(String message, Throwable throwable) {
+	public StudentServiceException(String message, Throwable throwable) {
 		super(message, throwable);
-
 }
-
 }

@@ -2,7 +2,7 @@
  * Project : Student
  */
 
-package com.training.student.common;
+package com.ust.training.student.common;
 
 import lombok.Data;
 /***
@@ -12,9 +12,9 @@ import lombok.Data;
  */
 
 @Data
-public class SearchByDTO {
+public class CriteriaSearchDTO {
 
   private String studentDepartment;
-  private int rollNumber;
+  private Integer rollNumber;
 
 }

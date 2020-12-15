@@ -1,24 +1,22 @@
 /***
  * Project Name  : StudentProject
  */
-package com.training.student.model;
+package com.ust.training.student.model;
 
 import org.springframework.data.annotation.Id;
 import com.azure.spring.data.cosmos.core.mapping.Container;
+import com.azure.spring.data.cosmos.core.mapping.PartitionKey;
+import com.ust.training.student.constant.StudentDbConstants;
 import lombok.Data;
-
 
 /**
  * Entity class for student
  * @author SACHIN AJITHKUMAR
  *
  */
-@Container(containerName = "studentDb")
+@Container(containerName = StudentDbConstants.COLLECTION_NAME)
 @Data
-public class Student {
-
-	
-	
+public class Student {	
     @Id
     private String studentId;
     private String firstName;
@@ -26,11 +24,7 @@ public class Student {
     private String studentAddress;
 
  
-    @com.azure.spring.data.cosmos.core.mapping.PartitionKey
- 
+    @PartitionKey
     private String studentDepartment;
-    private int rollNumber;
-  
-
-  
+    private Integer rollNumber; 
 }

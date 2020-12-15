@@ -2,23 +2,24 @@
  * Project Name : StudentProject
  */
 
-package com.training.student.controller;
+package com.ust.training.student.controller;
 
 import java.util.List;
 import javax.ws.rs.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.training.student.annotation.SwaggerToken;
-import com.training.student.common.SearchByDTO;
-import com.training.student.common.StudentDTO;
-import com.training.student.model.Student;
-import com.training.student.service.StudentService;
+import com.ust.training.student.annotation.SwaggerToken;
+import com.ust.training.student.common.CriteriaSearchDTO;
+import com.ust.training.student.common.StudentDTO;
+import com.ust.training.student.model.Student;
+import com.ust.training.student.service.StudentService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,24 +44,21 @@ public class StudentController {
    */
   @PostMapping("/save")
   @SwaggerToken
-  @ApiOperation(value = "Save and Update a Student ", notes = "Returns 200 OK/204 NO_CONTENT",
+  @ApiOperation(value = "Save and Update a Student ", notes = "Returns 201 Created/204 NO_CONTENT",
       httpMethod = HttpMethod.POST)
 
-  public ResponseEntity<Student> addUser(@RequestBody StudentDTO studentDto) {
-
-    log.debug("Begining the Post operation");
+  public ResponseEntity<Student> saveStudent(@RequestBody StudentDTO studentDto) {
+    log.debug("Begining the Post  operation saveStudent");
     Student student = studentService.updateAndSaveStudent(studentDto);
     if (null != student) {
       log.info("Status:201  Response:", studentDto);
-      log.debug("Ending the Post operation");
+      log.debug("Ending the Post operation saveStudent no value");
       return ResponseEntity.ok(student);
     } else {
-      log.info("Status:204  Response:", studentDto);
-      log.debug("Ending the Post operation because of no value");
+      log.info("Status:204  Response:");
+      log.debug("Ending the Post operation saveStudent no value");
       return ResponseEntity.noContent().build();
-
     }
-
   }
 
   /***
@@ -76,16 +74,18 @@ public class StudentController {
       httpMethod = HttpMethod.DELETE)
 
   public ResponseEntity<String> deleteUser(@PathVariable String id) {
-
+    log.debug("Begining the Delete operation deleteUser");
+    Student student=null;
     String statusMessage = null;
-    log.debug("Begining the Delete operation");
-    log.debug("Ending the Delete operation");
-    statusMessage = studentService.deleteStudent(id);
-    if (null != statusMessage) {
-      log.info("Status:201  Response:");
+    student = studentService.deleteStudent(id);
+    if (null != student) {
+      log.info("Status:200  Response:");
+      statusMessage="Deleted";
+      log.debug("Ending the Delete operation deleteUser");
       return ResponseEntity.ok(statusMessage);
     }
     log.info("Status:204  Response:");
+    log.debug("Ending the Delete operation deleteUser");
     return ResponseEntity.noContent().build();
   }
 
@@ -100,18 +100,17 @@ public class StudentController {
   @SwaggerToken
   @ApiOperation(value = "Fetching a Student ", notes = "Returns 200 OK/204 NO_CONTENT",
       httpMethod = HttpMethod.GET)
+  public ResponseEntity<StudentDTO> fetchStudent(@PathVariable String id) {
 
-  public ResponseEntity<StudentDTO> getStudent(@PathVariable String id) {
-
-    log.debug("Begining the Get operation");
-    StudentDTO studentDto = studentService.getStudent(id);
+    log.debug("Begining the fetch by id operation");
+    StudentDTO studentDto = studentService.fetchStudent(id);
     if (null != studentDto) {
-      log.info("Status:201  Response:", studentDto);
-      log.debug("Ending the Post operation");
+      log.info("Status:200  Response:", studentDto);
+      log.debug("Ending the  fetch by id operation");
       return ResponseEntity.ok(studentDto);
     } else {
-      log.debug("Ending the Post operation");
-      log.info("Status:204  Response:", studentDto);
+      log.debug("Ending the fetch by id operation");
+      log.info("Status:204  Response:");
       return ResponseEntity.noContent().build();
     }
   }
@@ -123,25 +122,23 @@ public class StudentController {
    * @param searchByDTO Object
    * @return students List return as StudentDtos
    */
-
-
   @PostMapping("/search")
   @SwaggerToken
-  @ApiOperation(value = "Save and Update a Student ", notes = "Returns 200 OK/204 NO_CONTENT",
+  @ApiOperation(value = "Search by Department name and rollnumber ", notes = "Returns 200 OK/204 NO_CONTENT",
       httpMethod = HttpMethod.POST)
 
   public ResponseEntity<List<Student>> searchStudentByDepartmentRollNumber(
-      @RequestBody SearchByDTO searchByDTO) {
-    log.debug("Begining of the post search method");
+      @RequestBody CriteriaSearchDTO searchByDTO) {
+    log.debug("Begining of the post operation  searchStudentByDepartmentRollNumber method");
     List<Student> student =
         studentService.fetchStudentByQueryWithDepartmentAndRollnumber(searchByDTO);
-    if (null != student) {
-      log.info("Status:201  Response:", student);
-      log.debug("Ending the Post operation");
+    if (!CollectionUtils.isEmpty(student)) {
+      log.info("Status:200  Response:", student);
+      log.debug("Ending the searchStudentByDepartmentRollNumber operation");
       return ResponseEntity.ok(student);
     } else {
-      log.debug("Ending the Post operation");
-      log.info("Status:204  Response:", student);
+      log.debug("Ending the Post searchStudentByDepartmentRollNumber operation");
+      log.info("Status:204  Response:");
       return ResponseEntity.noContent().build();
     }
   }

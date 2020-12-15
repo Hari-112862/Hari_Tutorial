@@ -2,7 +2,7 @@
  * Project Name  : StudentProject
  */
 
-package com.training.student.common;
+package com.ust.training.student.common;
 
 import lombok.Data;
 
@@ -11,17 +11,13 @@ import lombok.Data;
  * @author SACHIN AJITHKUMAR
  *
  */
-
 @Data
 public class StudentDTO {
 
 	    private String studentId;
 	    private String firstName;
 	    private String studentDepartment;
-	    private int rollNumber;
+	    private Integer rollNumber;
 	    private String lastName;
 	    private String studentAddress;
-	  
-
-
 }
