@@ -16,8 +16,8 @@ import com.azure.cosmos.CosmosClientBuilder;
 import com.azure.cosmos.models.CosmosQueryRequestOptions;
 import com.azure.cosmos.models.SqlParameter;
 import com.azure.cosmos.models.SqlQuerySpec;
-import com.ust.training.student.constant.SQLQueries;
-import com.ust.training.student.constant.StudentDbConstants;
+import com.ust.training.student.constant.ISqlQueryConstants;
+import com.ust.training.student.constant.IStudentDbConstants;
 import com.ust.training.student.exception.StudentDataAcssesException;
 import com.ust.training.student.model.Student;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +34,8 @@ public class StudentDao {
 
   @Autowired
   private CosmosClientBuilder cosmosClientBuilder;
-
-  @Value(StudentDbConstants.DATABASE_NAME)
+  @Value(IStudentDbConstants.DATABASE_NAME)
   private String databaseName;
-
 
   /***
    * This method accepts 2 parameters for the query query execution happeing here.
@@ -54,23 +52,23 @@ public class StudentDao {
 
       SqlQuerySpec querySpec = new SqlQuerySpec();
       SqlParameter department =
-          new SqlParameter(SQLQueries.DATABASE_PARAM_STUDENT_DEPARTMENT, studentDepartment);
+          new SqlParameter(ISqlQueryConstants.DATABASE_PARAM_STUDENT_DEPARTMENT, studentDepartment);
       SqlParameter rollNumberparam =
-          new SqlParameter(SQLQueries.DATABASE_PARAM_STUDENT_ROLLNUMBERT, rollNumber);
+          new SqlParameter(ISqlQueryConstants.DATABASE_PARAM_STUDENT_ROLLNUMBERT, rollNumber);
       List<SqlParameter> paramList = new ArrayList<>();
-      String query = SQLQueries.BASE_QUERY;
+      String query = ISqlQueryConstants.BASE_QUERY;
       if (null != rollNumber) {
-        query = query.concat(SQLQueries.ROLL_NUMBER_CRITERIA);
+        query = query.concat(ISqlQueryConstants.ROLL_NUMBER_CRITERIA);
         paramList.add(rollNumberparam);
       }
       if (!StringUtils.isEmpty(studentDepartment)) {
-        query = query.concat(SQLQueries.DEPARTMENT_CRITERIA);
+        query = query.concat(ISqlQueryConstants.DEPARTMENT_CRITERIA);
         paramList.add(department);
       }
       querySpec.setQueryText(query);
       querySpec.setParameters(paramList);
       studentList = cosmosClientBuilder.buildClient().getDatabase(databaseName)
-          .getContainer(StudentDbConstants.COLLECTION_NAME).queryItems(querySpec, getQueryOptions(), Student.class)
+          .getContainer(IStudentDbConstants.COLLECTION_NAME).queryItems(querySpec, getQueryOptions(), Student.class)
           .stream().collect(Collectors.toList());
     } catch (Exception exception) {
       log.error(
