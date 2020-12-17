@@ -4,13 +4,15 @@
 
 package com.ust.training.student.common;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import lombok.Data;
 
 /***
- * Temporary class for Student 
+ *class for Student DTO 
  * @author SACHIN AJITHKUMAR
  *
  */
+@EntityScan
 @Data
 public class StudentDTO {
 

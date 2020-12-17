@@ -100,14 +100,14 @@ public class StudentService {
    */
   public Student deleteStudent(String id) {
     log.debug("Starting deletestudent method");
-    Student findByIdStudent = null;
+    Student FetchStudentById = null;
     try {
-      findByIdStudent = repository.findById(id).block();
-      if (null != findByIdStudent) {
-        repository.delete(findByIdStudent).block();
+      FetchStudentById = repository.findById(id).block();
+      if (null != FetchStudentById) {
+        repository.delete(FetchStudentById).block();
       }
       log.debug("ending deletestudent method");
-      return findByIdStudent;
+      return FetchStudentById;
     } catch (Exception exception) {
       log.error("Exception occured in deleteStudent method:", exception);
       throw new StudentServiceException("Exception in DeleteStudent", exception);
@@ -120,7 +120,7 @@ public class StudentService {
    * @param studentDTO Dto object of student
    * @return studentDto list
    */
-  public List<Student> fetchStudentByQueryWithDepartmentAndRollnumber(
+  public List<Student> fetchStudentByCriteria(
       CriteriaSearchDTO studentDTO) {
 
     log.debug("Starting fetchStudentByQueryWithDepartmentAndRollnumber method in service");

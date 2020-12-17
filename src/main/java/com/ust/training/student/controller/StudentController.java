@@ -5,10 +5,12 @@
 package com.ust.training.student.controller;
 
 import java.util.List;
+import javax.validation.Valid;
 import javax.ws.rs.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +38,7 @@ public class StudentController {
   @Autowired
   StudentService studentService;
 
+
   /***
    * post method which is addingStudent
    * 
@@ -47,7 +50,7 @@ public class StudentController {
   @ApiOperation(value = "Save and Update a Student ", notes = "Returns 201 Created/204 NO_CONTENT",
       httpMethod = HttpMethod.POST)
 
-  public ResponseEntity<Student> saveStudent(@RequestBody StudentDTO studentDto) {
+  public ResponseEntity<Student> saveStudent(@Validated @RequestBody StudentDTO studentDto) {
     log.debug("Begining the Post  operation saveStudent");
     Student student = studentService.updateAndSaveStudent(studentDto);
     if (null != student) {
@@ -73,7 +76,7 @@ public class StudentController {
   @ApiOperation(value = "Delete an existing Student", notes = "Returns 200 OK/204 NO_CONTENT",
       httpMethod = HttpMethod.DELETE)
 
-  public ResponseEntity<String> deleteUser(@PathVariable String id) {
+  public ResponseEntity<String> deleteStudent(@PathVariable String id) {
     log.debug("Begining the Delete operation deleteUser");
     Student student=null;
     String statusMessage = null;
@@ -109,8 +112,8 @@ public class StudentController {
       log.debug("Ending the  fetch by id operation");
       return ResponseEntity.ok(studentDto);
     } else {
-      log.debug("Ending the fetch by id operation");
       log.info("Status:204  Response:");
+      log.debug("Ending the fetch by id operation");
       return ResponseEntity.noContent().build();
     }
   }
@@ -127,18 +130,18 @@ public class StudentController {
   @ApiOperation(value = "Search by Department name and rollnumber ", notes = "Returns 200 OK/204 NO_CONTENT",
       httpMethod = HttpMethod.POST)
 
-  public ResponseEntity<List<Student>> searchStudentByDepartmentRollNumber(
-      @RequestBody CriteriaSearchDTO searchByDTO) {
+  public ResponseEntity<List<Student>> fetchStudentByCriteria(
+      @RequestBody CriteriaSearchDTO searchByCriteria) {
     log.debug("Begining of the post operation  searchStudentByDepartmentRollNumber method");
     List<Student> student =
-        studentService.fetchStudentByQueryWithDepartmentAndRollnumber(searchByDTO);
+        studentService.fetchStudentByCriteria(searchByCriteria);
     if (!CollectionUtils.isEmpty(student)) {
       log.info("Status:200  Response:", student);
       log.debug("Ending the searchStudentByDepartmentRollNumber operation");
       return ResponseEntity.ok(student);
     } else {
-      log.debug("Ending the Post searchStudentByDepartmentRollNumber operation");
       log.info("Status:204  Response:");
+      log.debug("Ending the Post searchStudentByDepartmentRollNumber operation");
       return ResponseEntity.noContent().build();
     }
   }

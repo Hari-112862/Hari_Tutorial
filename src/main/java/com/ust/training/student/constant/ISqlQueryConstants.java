@@ -7,4 +7,8 @@ public interface ISqlQueryConstants {
  String  ROLL_NUMBER_CRITERIA                    = " and studentDb.rollNumber=@rollNumber";
  String DATABASE_PARAM_STUDENT_DEPARTMENT        ="@studentDepartment";
  String DATABASE_PARAM_STUDENT_ROLLNUMBERT       ="@rollNumber";
+ String COLLECTION_NAME                    ="studentDb";
+ String DATABASE_NAME                      ="${azure.cosmosdb.database}";
+ String DATABASE_KEY                       ="${azure.cosmosdb.key}";
+ String DATABASE_URI                       ="${azure.cosmosdb.uri}";
 }

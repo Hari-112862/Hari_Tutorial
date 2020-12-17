@@ -17,7 +17,6 @@ import com.azure.cosmos.models.CosmosQueryRequestOptions;
 import com.azure.cosmos.models.SqlParameter;
 import com.azure.cosmos.models.SqlQuerySpec;
 import com.ust.training.student.constant.ISqlQueryConstants;
-import com.ust.training.student.constant.IStudentDbConstants;
 import com.ust.training.student.exception.StudentDataAcssesException;
 import com.ust.training.student.model.Student;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +33,7 @@ public class StudentDao {
 
   @Autowired
   private CosmosClientBuilder cosmosClientBuilder;
-  @Value(IStudentDbConstants.DATABASE_NAME)
+  @Value(ISqlQueryConstants.DATABASE_NAME)
   private String databaseName;
 
   /***
@@ -68,7 +67,7 @@ public class StudentDao {
       querySpec.setQueryText(query);
       querySpec.setParameters(paramList);
       studentList = cosmosClientBuilder.buildClient().getDatabase(databaseName)
-          .getContainer(IStudentDbConstants.COLLECTION_NAME).queryItems(querySpec, getQueryOptions(), Student.class)
+          .getContainer(ISqlQueryConstants.COLLECTION_NAME).queryItems(querySpec, getQueryOptions(), Student.class)
           .stream().collect(Collectors.toList());
     } catch (Exception exception) {
       log.error(

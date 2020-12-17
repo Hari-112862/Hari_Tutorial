@@ -12,8 +12,8 @@ import com.azure.cosmos.DirectConnectionConfig;
 import com.azure.cosmos.GatewayConnectionConfig;
 import com.azure.spring.data.cosmos.config.AbstractCosmosConfiguration;
 import com.azure.spring.data.cosmos.repository.config.EnableReactiveCosmosRepositories;
-import com.ust.training.student.constant.IStudentDbConstants;
-import com.ust.training.student.constant.IStudentPackageConstants;
+import com.ust.training.student.constant.ISqlQueryConstants;
+import com.ust.training.student.constant.IStudentApplicationConstants;
 
 /***
  * CosmosDbConfiguration class
@@ -21,14 +21,14 @@ import com.ust.training.student.constant.IStudentPackageConstants;
  *
  */
 @Configuration
-@EnableReactiveCosmosRepositories(basePackages = IStudentPackageConstants.STUDENT_BASE_PACKAGE)
+@EnableReactiveCosmosRepositories(basePackages = IStudentApplicationConstants.STUDENT_BASE_PACKAGE)
 public class CosmosDBConfig extends AbstractCosmosConfiguration {
 
-  @Value(IStudentDbConstants.DATABASE_URI)
+  @Value(ISqlQueryConstants.DATABASE_URI)
   private String cosmosDbUrl;
-  @Value(IStudentDbConstants.DATABASE_KEY)
+  @Value(ISqlQueryConstants.DATABASE_KEY)
   private String cosmosDbKey;
-  @Value(IStudentDbConstants.DATABASE_NAME)
+  @Value(ISqlQueryConstants.DATABASE_NAME)
   private String databaseName;
 	/***
 	 * Method for returning the dburl and key
