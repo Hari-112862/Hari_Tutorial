@@ -99,14 +99,16 @@ public class StudentService {
    * @return String
    */
   public Student deleteStudent(String id) {
-    log.debug("Starting deletestudent method");
+    log.info("Starting deletestudent method");
     Student FetchStudentById = null;
     try {
       FetchStudentById = repository.findById(id).block();
       if (null != FetchStudentById) {
+        log.info("inside if");
         repository.delete(FetchStudentById).block();
       }
-      log.debug("ending deletestudent method");
+      log.info("ending deletestudent method");
+      System.out.println("Delete thd status"+FetchStudentById);
       return FetchStudentById;
     } catch (Exception exception) {
       log.error("Exception occured in deleteStudent method:", exception);

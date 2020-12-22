@@ -27,167 +27,229 @@ import com.ust.training.student.common.CriteriaSearchDTO;
 import com.ust.training.student.common.StudentDTO;
 import com.ust.training.student.model.Student;
 import com.ust.training.student.service.StudentService;
+
 @RunWith(JUnit4.class)
 /***
  * Test class for student controller.
+ * 
  * @author SACHIN AJITHKUMAR
  *
  */
 public class StudentControllerTest {
 
   @Mock
-  StudentService studentService; 
+  StudentService studentService;
   @InjectMocks
   StudentController studentController;
-  String request=null;
-  StudentDTO studentDTORequest = new StudentDTO();
-  Student studentResponse=new Student(); 
-  CriteriaSearchDTO criteriaSearchDTO = new CriteriaSearchDTO();
-  ObjectMapper mapper = new ObjectMapper();
-  RequestBuilder requestBuilder =null;
-  MvcResult result=null;
-  List<Student> students =new ArrayList<Student>();
+
+
   MockMvc mockMvc;
 
   /***
    * Method need to execute at first before all test cases
    */
-@BeforeClass
-public static void beforZeClass() {
-  System.out.println("BEFORE");
-}
-  
-/***
- * Method which is executing just before each test cases
- */
-@Before
-  public void setup()
-  {
-  MockitoAnnotations.initMocks(this);
-  mockMvc = MockMvcBuilders.standaloneSetup(studentController).build();
+  @BeforeClass
+  public static void beforZeClass() {
+    System.out.println("BEFORE");
+  }
+
+  /***
+   * Method which is executing just before each test cases
+   */
+  @Before
+  public void setup() {
+    MockitoAnnotations.initMocks(this);
+    mockMvc = MockMvcBuilders.standaloneSetup(studentController).build();
     System.out.println("before");
   }
 
-/**
- * Test for {@link StudentController#saveStudent(StudentDTO)}} with no content as response
- * @throws Exception
- */
-
-@Test
-
-public void testSavetudentWithNoContent() throws Exception {
-  studentDTORequest.setFirstName("Hari");
-  studentDTORequest.setStudentId("1");
-  request  = mapper.writeValueAsString(studentDTORequest);
-  Mockito.when(studentService.updateAndSaveStudent(Mockito.any(StudentDTO.class))).thenReturn(null);
-  requestBuilder = MockMvcRequestBuilders.post("/save").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON).content(request);
-  result = mockMvc.perform(requestBuilder).andReturn();
-  assertEquals(result.getResponse().getStatus(),204);
-}
-
-/**
- *  Test for {@link StudentController#saveStudent(StudentDTO)}} with Success response
- * @throws Exception
- */
+  /**
+   * Test for {@link StudentController#saveStudent(StudentDTO)}} with no content as response
+   * 
+   * @throws Exception
+   */
 
   @Test
-  
+
+  public void testSavetudentWithNoContent() throws Exception {
+    MvcResult result = null;
+    RequestBuilder requestBuilder = null;
+    ObjectMapper mapper = new ObjectMapper();
+    String request = null;
+    StudentDTO studentDTORequest = new StudentDTO();
+    studentDTORequest.setFirstName("Hari");
+    studentDTORequest.setStudentId("1");
+    request = mapper.writeValueAsString(studentDTORequest);
+    Mockito.when(studentService.updateAndSaveStudent(Mockito.any(StudentDTO.class)))
+        .thenReturn(null);
+    requestBuilder = MockMvcRequestBuilders.post("/save").accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON).content(request);
+    result = mockMvc.perform(requestBuilder).andReturn();
+    assertEquals(result.getResponse().getStatus(), 204);
+  }
+
+  /**
+   * Test for {@link StudentController#saveStudent(StudentDTO)}} with Success response
+   * 
+   * @throws Exception
+   */
+
+  @Test
+
   public void testSavetudentWithSuccess() throws Exception {
-  studentResponse.setFirstName("Hari");  
-  studentResponse.setStudentId("1"); 
-  studentDTORequest.setFirstName("Hari");
-  studentDTORequest.setStudentId("1");
-  request = mapper.writeValueAsString(studentDTORequest);
-  Mockito.when(studentService.updateAndSaveStudent(Mockito.any(StudentDTO.class))).thenReturn(studentResponse);
-  requestBuilder =MockMvcRequestBuilders.post("/save").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON).content(request);
-  result = mockMvc.perform(requestBuilder).andReturn();
-  assertEquals(result.getResponse().getStatus(),200);
+    MvcResult result = null;
+    RequestBuilder requestBuilder = null;
+    ObjectMapper mapper = new ObjectMapper();
+    Student studentResponse = new Student();
+    String request = null;
+    StudentDTO studentDTORequest = new StudentDTO();
+    studentResponse.setFirstName("Hari");
+    studentResponse.setStudentId("1");
+    studentDTORequest.setFirstName("Hari");
+    studentDTORequest.setStudentId("1");
+    request = mapper.writeValueAsString(studentDTORequest);
+    Mockito.when(studentService.updateAndSaveStudent(Mockito.any(StudentDTO.class)))
+        .thenReturn(studentResponse);
+    requestBuilder = MockMvcRequestBuilders.post("/save").accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON).content(request);
+    result = mockMvc.perform(requestBuilder).andReturn();
+    assertEquals(result.getResponse().getStatus(), 200);
 
   }
+
   /**
    * Test for {@link StudentController#deleteStudent(String)}} with no content
+   * 
    * @throws Exception
    */
-  
+
   @Test
-  public void testDeleteStudentDetailsWithNoContent() throws Exception{
+  public void testDeleteStudentDetailsWithNoContent() throws Exception {
+    MvcResult result = null;
+    RequestBuilder requestBuilder = null;
+    String request = null;
     request = "1";
     Mockito.when(studentService.deleteStudent(Mockito.any(String.class))).thenReturn(null);
-    requestBuilder = MockMvcRequestBuilders.delete("/1").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON).content(request);
+    requestBuilder = MockMvcRequestBuilders.delete("/1").accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON).content(request);
     result = mockMvc.perform(requestBuilder).andReturn();
-    assertEquals(result.getResponse().getStatus(),204);
+    assertEquals(result.getResponse().getStatus(), 204);
   }
+
   /**
    * Test for {@link StudentController#deleteStudent(String)}} with Success response
+   * 
    * @throws Exception
    */
   @Test
-  public void testDeleteStudentDetailsWithSuccess() throws Exception{
+  public void testDeleteStudentDetailsWithSuccess() throws Exception {
+    MvcResult result = null;
+    RequestBuilder requestBuilder = null;
+    Student studentResponse = new Student();
+    String request = null;
     studentResponse.setFirstName("Hari");
     studentResponse.setRollNumber(1);
     request = "1";
-    Mockito.when(studentService.deleteStudent(Mockito.any(String.class))).thenReturn(studentResponse);
-    requestBuilder = MockMvcRequestBuilders.delete("/1").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON).content(request);
+    Mockito.when(studentService.deleteStudent(Mockito.any(String.class)))
+        .thenReturn(studentResponse);
+    requestBuilder = MockMvcRequestBuilders.delete("/1").accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON).content(request);
     result = mockMvc.perform(requestBuilder).andReturn();
-    assertEquals(result.getResponse().getStatus(),200);
+    assertEquals(result.getResponse().getStatus(), 200);
   }
- 
+
   /**
    * Test for {@link StudentController#fetchStudent(String)}} with no content
+   * 
    * @throws Exception
    */
   @Test
-  public void testGetStudentDetailsWithNoContent() throws Exception{
+  public void testGetStudentDetailsWithNoContent() throws Exception {
+    MvcResult result = null;
+    RequestBuilder requestBuilder = null;
+    String request = null;
     request = "1";
     Mockito.when(studentService.fetchStudent(Mockito.any(String.class))).thenReturn(null);
-    requestBuilder =MockMvcRequestBuilders.get("/1").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON).content(request); 
+    requestBuilder = MockMvcRequestBuilders.get("/1").accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON).content(request);
     result = mockMvc.perform(requestBuilder).andReturn();
-    assertEquals(result.getResponse().getStatus(),204);
+    assertEquals(result.getResponse().getStatus(), 204);
   }
+
   /**
    * Test for {@link StudentController#fetchStudent(String)}} with Success response
+   * 
    * @throws Exception
    */
   @Test
-  public void testGetStudentDetailsWithSuccess() throws Exception{
+  public void testGetStudentDetailsWithSuccess() throws Exception {
+    MvcResult result = null;
+    RequestBuilder requestBuilder = null;
+    String request = null;
+    StudentDTO studentDTORequest = new StudentDTO();
     studentDTORequest.setFirstName("Hari");
     studentDTORequest.setRollNumber(1);
     request = "1";
-    Mockito.when(studentService.fetchStudent(Mockito.any(String.class))).thenReturn(studentDTORequest);
-    requestBuilder =MockMvcRequestBuilders.get("/1").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON).content(request); 
+    Mockito.when(studentService.fetchStudent(Mockito.any(String.class)))
+        .thenReturn(studentDTORequest);
+    requestBuilder = MockMvcRequestBuilders.get("/1").accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON).content(request);
     result = mockMvc.perform(requestBuilder).andReturn();
-    assertEquals(result.getResponse().getStatus(),200);
+    assertEquals(result.getResponse().getStatus(), 200);
   }
+
   /**
    * Test for {@link StudentController#fetchStudentByCriteria(CriteriaSearchDTO)}} with no Content
+   * 
    * @throws Exception
    */
   @Test
-  public void testSearchStudentByCriteriaWithNoContent() throws Exception{
+  public void testSearchStudentByCriteriaWithNoContent() throws Exception {
+
+    MvcResult result = null;
+    RequestBuilder requestBuilder = null;
+    ObjectMapper mapper = new ObjectMapper();
+    CriteriaSearchDTO criteriaSearchDTO = new CriteriaSearchDTO();
+    String request = null;
     criteriaSearchDTO.setRollNumber(1);
     criteriaSearchDTO.setStudentDepartment("cs");
-    request=mapper.writeValueAsString(criteriaSearchDTO);
-    Mockito.when(studentService.fetchStudentByCriteria(Mockito.any(CriteriaSearchDTO .class))).thenReturn(null);
-    requestBuilder =MockMvcRequestBuilders.post("/search").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON).content(request);  
+    request = mapper.writeValueAsString(criteriaSearchDTO);
+    Mockito.when(studentService.fetchStudentByCriteria(Mockito.any(CriteriaSearchDTO.class)))
+        .thenReturn(null);
+    requestBuilder = MockMvcRequestBuilders.post("/search").accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON).content(request);
     result = mockMvc.perform(requestBuilder).andReturn();
-    assertEquals(result.getResponse().getStatus(),204);
+    assertEquals(result.getResponse().getStatus(), 204);
   }
+
   /**
-   * Test for {@link StudentController#fetchStudentByCriteria(CriteriaSearchDTO)}} with Success response
+   * Test for {@link StudentController#fetchStudentByCriteria(CriteriaSearchDTO)}} with Success
+   * response
+   * 
    * @throws Exception
    */
   @Test
-  public void testSearchStudentByCriteriaWithSuccess() throws Exception{
+  public void testSearchStudentByCriteriaWithSuccess() throws Exception {
+
+    List<Student> students = new ArrayList<Student>();
+    MvcResult result = null;
+    RequestBuilder requestBuilder = null;
+    ObjectMapper mapper = new ObjectMapper();
+    CriteriaSearchDTO criteriaSearchDTO = new CriteriaSearchDTO();
+    Student studentResponse = new Student();
+    String request = null;
     criteriaSearchDTO.setRollNumber(1);
-    criteriaSearchDTO.setStudentDepartment("cs"); 
+    criteriaSearchDTO.setStudentDepartment("cs");
     students.add(studentResponse);
-    request=mapper.writeValueAsString(criteriaSearchDTO);
-    Mockito.when(studentService.fetchStudentByCriteria(Mockito.any(CriteriaSearchDTO.class))).thenReturn(students);
-    requestBuilder =MockMvcRequestBuilders.post("/search").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON).content(request);  
+    request = mapper.writeValueAsString(criteriaSearchDTO);
+    Mockito.when(studentService.fetchStudentByCriteria(Mockito.any(CriteriaSearchDTO.class)))
+        .thenReturn(students);
+    requestBuilder = MockMvcRequestBuilders.post("/search").accept(MediaType.APPLICATION_JSON)
+        .contentType(MediaType.APPLICATION_JSON).content(request);
     result = mockMvc.perform(requestBuilder).andReturn();
-    assertEquals(result.getResponse().getStatus(),200);
+    assertEquals(result.getResponse().getStatus(), 200);
   }
- 
+
 
 
 }
