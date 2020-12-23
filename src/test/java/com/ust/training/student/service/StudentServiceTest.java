@@ -198,4 +198,54 @@ public class StudentServiceTest {
     studentService.fetchStudentByCriteria(studentDTO);
   }
   
+
+  /**
+   * Test for {@link  StudentService#updateAndSaveStudent)}} with exception as  response
+   * 
+   * @throws Exception
+   */
+  
+  
+  @Test
+  public void testupdateAndSaveStudentWithNull() {
+    StudentDTO studentdto = new StudentDTO();
+    studentdto.setStudentId("1");
+    studentdto.setFirstName("Hari");
+    Student student = new Student();
+    Mono<Student> studentResponse= Mono.just(student);
+    Mockito.when(repository.save(Mockito.any(Student.class))).thenReturn(studentResponse);
+    Mockito.when(repository.findById(Mockito.any(String.class))).thenReturn(Mono.empty());
+    Student s=  studentService.updateAndSaveStudent(studentdto);
+    assertNotNull(s);
+    
+  }
+  
+  @Test
+  public void testupdateAndSaveStudentWithData() {
+    StudentDTO studentdto = new StudentDTO();
+    studentdto.setStudentId("1");
+    studentdto.setFirstName("Hari");
+    Student student = new Student();
+    Mono<Student> studentResponse= Mono.just(student);
+    Mono<Void> stud= Mono.empty();
+    Mockito.when(repository.save(Mockito.any(Student.class))).thenReturn(studentResponse);
+    Mockito.when(repository.findById(Mockito.any(String.class))).thenReturn(studentResponse);
+    Mockito.when(repository.delete(Mockito.any(Student.class))).thenReturn(stud);
+    Student s=  studentService.updateAndSaveStudent(studentdto);
+    assertNotNull(s);
+    
+  }
+  /**
+   * Test for {@link  StudentService#updateAndSaveStudent)}} with exception as  response
+   * 
+   * @throws Exception
+   */
+  @Test(expected = StudentServiceException.class)
+  public void testupdateAndSaveStudentWithException() {
+    StudentDTO studentDto = new StudentDTO();
+    Mockito.when(repository.findById(Mockito.any(String.class))).thenThrow(new IllegalArgumentException());
+    studentService.updateAndSaveStudent(studentDto);
+  }
+
+  
 }
